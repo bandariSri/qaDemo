@@ -1,5 +1,8 @@
 package Tests;
 
+import java.io.IOException;
+
+import org.junit.AfterClass;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -14,7 +17,7 @@ public class RegistrationPageTests extends testcases {
 	}
 
 	@Test(priority = 1)
-	public void fillAndSubmitRegistrationForm() {
+	public void fillAndSubmitRegistrationForm() throws IOException {
 		Demoqa.RegistrationPage.navigateToRegistrationPage();
 		Demoqa.RegistrationPage.enterFirstName();
 		Demoqa.RegistrationPage.enterLastName();
@@ -30,6 +33,13 @@ public class RegistrationPageTests extends testcases {
 		Demoqa.RegistrationPage.enterConfirmPassword();
 		Demoqa.RegistrationPage.submitRegistrationForm();
 	}
+	
+	@AfterClass
+	public void closedown(){
+		driver.close();
+		driver.quit();
+	}
+	
 
 }
 

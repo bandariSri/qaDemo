@@ -1,12 +1,16 @@
 package Demoqa;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.Select;
 
-public class RegistrationPage {
+import BasePages.GenericActions;
+
+public class RegistrationPage extends GenericActions{
 	public static WebDriver driver;
 	@FindBy(how = How.LINK_TEXT, using = "Registration")
 	static WebElement RegistrationLink;
@@ -50,6 +54,7 @@ public class RegistrationPage {
 	static WebElement Check_Password_Strength;
 	@FindBy(how = How.NAME, using = "pie_submit")
 	static WebElement Submit_Registration_Form;
+	
 
 	public RegistrationPage(WebDriver driver) {
 		RegistrationPage.driver = driver;
@@ -60,12 +65,14 @@ public class RegistrationPage {
 		RegistrationLink.click();
 	}
 
-	public static void enterFirstName() {
-		FirstName.sendKeys("FirstName");
+	public static void enterFirstName() throws IOException {
+		String FirstNameValue=readTestData("Registration", "FirstName", 1);
+		FirstName.sendKeys(FirstNameValue);
 	}
 
-	public static void enterLastName() {
-		LastName.sendKeys("LastName");
+	public static void enterLastName() throws IOException {
+		String LastNameValue=readTestData("Registration", "LastName", 2);
+		LastName.sendKeys(LastNameValue);
 	}
 
 	public static void enterMaritalStatus() {
@@ -77,42 +84,59 @@ public class RegistrationPage {
 		Hobby_cricket.click();
 	}
 
-	public static void selectCountry() {
+	public static void selectCountry() throws IOException {
+		String CountryValue=readTestData("Registration", "Country", 2);
 		Select selectCountry = new Select(Country);
-		selectCountry.selectByValue("India");
+		selectCountry.selectByValue(CountryValue);
 	}
 
 	public static void selectDOB() {
-		Select selectMonth = new Select(DOB_Month);
-		selectMonth.selectByValue("10");
-		Select selectDay = new Select(DOB_Day);
-		selectDay.selectByValue("2");
-		Select selectYear = new Select(DOB_Year);
-		selectYear.selectByValue("2009");
+	
+		try {
+			String MonthValue=readTestData("Registration", "Month", 2).substring(0, readTestData("Registration", "Month", 2).indexOf("."));
+			String DayValue=readTestData("Registration", "Day", 2).substring(0, readTestData("Registration", "Day", 2).indexOf("."));
+			String YearValue=readTestData("Registration", "Year", 2).substring(0, readTestData("Registration", "Year", 2).indexOf("."));
+			Select selectMonth = new Select(DOB_Month);
+			selectMonth.selectByValue(MonthValue);
+			Select selectDay = new Select(DOB_Day);
+			selectDay.selectByValue(DayValue);
+			Select selectYear = new Select(DOB_Year);
+			selectYear.selectByValue(YearValue);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
-	public static void enterPhoneNumber() {
-		PhoneNumber.sendKeys("1234567890");
+	public static void enterPhoneNumber() throws IOException {
+		String PhNumberValue=readTestData("Registration", "PhoneNumber", 2);
+		PhoneNumber.sendKeys(PhNumberValue);
 	}
 
-	public static void enterUserName() {
-		UserName.sendKeys("TestUserName9");
+	public static void enterUserName() throws IOException {
+		String UserNameValue=readTestData("Registration", "UserNameValue", 2);
+		UserName.sendKeys(UserNameValue);
 	}
 
-	public static void enterEmail() {
-		Email.sendKeys("test.tst@gmail.com");
+	public static void enterEmail() throws IOException {
+		String EmailValue=readTestData("Registration", "Email", 2);
+		Email.sendKeys(EmailValue);
 	}
 
-	public static void enterAboutUrSelf() {
-		About_UrSelf.sendKeys("Tester");
+	public static void enterAboutUrSelf() throws IOException {
+		String AboutUrSelfValue=readTestData("Registration", "AboutUrSelt", 2);
+		About_UrSelf.sendKeys(AboutUrSelfValue);
 	}
 
-	public static void enterPassword() {
-		Password.sendKeys("12345");
+	public static void enterPassword() throws IOException {
+		String PasswordValue=readTestData("Registration", "Password", 2);
+		Password.sendKeys(PasswordValue);
 	}
 
-	public static void enterConfirmPassword() {
-		ConfirmPassword.sendKeys("123456789");
+	public static void enterConfirmPassword() throws IOException {
+		String ConfirmPasswordValue=readTestData("Registration", "Password", 2);
+		ConfirmPassword.sendKeys(ConfirmPasswordValue);
 	}
 
 	public static String getPasswordStrenghtIndicator() {
